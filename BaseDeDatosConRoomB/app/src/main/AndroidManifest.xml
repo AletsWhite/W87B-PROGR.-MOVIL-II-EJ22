@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.ivanvega.basededatosconroomb">
 
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -23,9 +25,13 @@
                 android:authorities="net.ivanvega.basededatosconroomb.provider"
                 android:name=".provider.MiProveedorContenido"
                 android:exported="true"
+                android:grantUriPermissions="true"
+                android:readPermission="net.ivanvega.basededatosconroomb.provider"
+                android:writePermission="net.ivanvega.basededatosconroomb.provider"
                 >
 
         </provider>
     </application>
+    <permission android:name="net.ivanvega.basededatosconroomb.provider"/>
 
 </manifest>

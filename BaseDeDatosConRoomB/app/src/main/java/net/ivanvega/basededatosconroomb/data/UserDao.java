@@ -28,7 +28,7 @@ public interface UserDao {
     long insertUser(User user);
 
     @Delete
-    int delete(User user);
+    int deleteUser(User user);
 
     @Update
     int updateUser(User user);

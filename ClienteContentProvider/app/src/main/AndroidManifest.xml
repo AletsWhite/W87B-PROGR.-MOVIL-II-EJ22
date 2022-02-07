@@ -2,8 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.ivanvega.clientecontentprovider">
 
+    <uses-permission android:name="net.ivanvega.basededatosconroomb.provider"/>
+
     <queries>
         <provider  android:authorities="net.ivanvega.basededatosconroomb.provider" />
+
+
     </queries>
 
     <application

@@ -1,11 +1,15 @@
 package net.ivanvega.basededatosconroomb.provider;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.MatrixCursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
+import android.opengl.Matrix;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -15,6 +19,7 @@ import net.ivanvega.basededatosconroomb.data.AppDataBase;
 import net.ivanvega.basededatosconroomb.data.User;
 import net.ivanvega.basededatosconroomb.data.UserDao;
 
+import java.sql.SQLData;
 import java.util.List;
 
 public class MiProveedorContenido
@@ -74,13 +79,45 @@ public class MiProveedorContenido
                   break;
 
               case 2:
+                  try {
+
+                      cursor  = UserToCursorUser(dao.findByName(strings1[1], strings1[2]));
+
+                  }catch (NullPointerException e){
+
+                  }
+
 
                   break;
 
               case 3:
+                    /*
+                  try {
+
+                      cursor  = UserToCursorUser(dao.loadAllByIds(Integer.parseInt()strings[0]);
+
+                  }catch (NullPointerException e){
+
+                  }
+
+                     */
 
                   break;
           }
+
+        return cursor;
+    }
+
+    private MatrixCursor UserToCursorUser(User usuario){
+        MatrixCursor cursor = new MatrixCursor(new String[]{
+                "uid","first_name","last_name"
+        })    ;
+
+
+        cursor.newRow().add("uid", usuario.uid)
+                .add("first_name", usuario.firstName)
+                .add("last_name", usuario.lastName);
+
 
         return cursor;
     }
@@ -148,6 +185,7 @@ public class MiProveedorContenido
                  uri =
                          Uri.withAppendedPath(uri,
                                  String.valueOf(idNewRow));
+
                 break;
         }
         return uri;
@@ -156,7 +194,22 @@ public class MiProveedorContenido
 
     @Override
     public int delete(@NonNull Uri uri, @Nullable String s, @Nullable String[] strings) {
-        return 0;
+        int filasAfectadas = -1;
+
+        switch (sURIMatcher.match(uri)){
+            case 2:
+                int idDelete = Integer.valueOf( uri.getLastPathSegment());
+                AppDataBase db =
+                        AppDataBase.getDataBaseInstance(getContext());
+                UserDao dao = db.getUserDao();
+                List<User>  lstUserDelete = dao.loadAllByIds(new int[]{idDelete});
+                User userDelete = lstUserDelete.get(0);
+                filasAfectadas = dao.deleteUser(userDelete);
+
+                break;
+
+        }
+        return filasAfectadas;
     }
 
     @Override
@@ -192,13 +245,11 @@ public class MiProveedorContenido
 
                 filasAfectadas = dao.updateUser(userUpdate);
 
+
                 break;
         }
 
         return filasAfectadas;
 
     }
-
-
-
 }

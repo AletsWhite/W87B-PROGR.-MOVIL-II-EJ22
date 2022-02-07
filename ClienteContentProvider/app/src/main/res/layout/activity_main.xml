@@ -24,10 +24,38 @@
         ></Button>
 
     <Button
+        android:id="@+id/btnQueryUno"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Query Uno content provider"
+        ></Button>
+
+    <Button
+        android:id="@+id/btnQueryPorID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Query por ID content provider"
+        ></Button>
+
+    <Button
         android:id="@+id/btnInsert"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Insert content provider"
+        ></Button>
+
+    <Button
+        android:id="@+id/btnUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Update content provider"
+        ></Button>
+
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete content provider"
         ></Button>
 
 </LinearLayout>

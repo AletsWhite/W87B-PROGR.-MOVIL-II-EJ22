@@ -16,7 +16,7 @@ import net.ivanvega.basededatosconroomb.data.UserDao;
 import net.ivanvega.basededatosconroomb.provider.UsuarioProviderContract;
 
 public class MainActivity extends AppCompatActivity {
-    Button btnIn, btnQue;
+    Button btnIn, btnQue, btnDel;
 
 
     @Override
@@ -29,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
 
         btnIn = findViewById(R.id.btnInsert);
         btnQue = findViewById(R.id.btnQuery);
+
+
+
 
         btnIn.setOnClickListener(view -> {
 

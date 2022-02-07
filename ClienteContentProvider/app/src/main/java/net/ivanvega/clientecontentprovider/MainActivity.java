@@ -21,10 +21,33 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btnQuery).setOnClickListener(
             v -> consultarCP()
         );
+        findViewById(R.id.btnQueryUno).setOnClickListener(
+                v -> {
+                    consultarUnCP();
+                }
+        );
+        findViewById(R.id.btnQueryPorID).setOnClickListener(
+                v -> {
+                    consultarPorIDCP();
+                }
+        );
 
         findViewById(R.id.btnInsert).setOnClickListener(
                 v -> {
                     insertCP();
+                }
+        );
+
+        findViewById(R.id.btnUpdate).setOnClickListener(
+                view -> {
+                    updateCP();
+                }
+
+                );
+
+        findViewById(R.id.btnDelete).setOnClickListener(
+                view -> {
+                    delateCP();
                 }
         );
 
@@ -38,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
                 null,null,null
         );
 
+
+
         if(c!=null){
             while(c.moveToNext()){
                 Log.d("providerusuario", "Usuario: "+ c.getInt(0)
@@ -47,7 +72,47 @@ public class MainActivity extends AppCompatActivity {
             Log.d("providerusuario", "Sin Usuario: ");
         }
 
-        updateCP();
+    }
+
+    private void consultarUnCP() {
+        String id = "1";
+        String nombre = "Juan";
+        String apellido = "Peres";
+        Cursor c =  getContentResolver().query(Uri.withAppendedPath
+                (UsuarioProviderContract.CONTENT_URI, "1"),
+                UsuarioProviderContract.COLUMNS,
+                null,new String[]{id, nombre, apellido},null
+        );
+
+        if(c!=null){
+            while(c.moveToNext()){
+                Log.d("providerusuario", "Usuario: "+ c.getInt(0)
+                        + " - " + c.getString(1));
+            }
+        }else{
+            Log.d("providerusuario", "Sin Usuario: ");
+        }
+
+    }
+
+    private void consultarPorIDCP() {
+        String id = "1";
+        String nombre = "Juan";
+        String apellido = "Peres";
+        Cursor c =  getContentResolver().query(Uri.withAppendedPath
+                        (UsuarioProviderContract.CONTENT_URI, "1"),
+                UsuarioProviderContract.COLUMNS,
+                null,new String[]{id, nombre, apellido},null
+        );
+
+        if(c!=null){
+            while(c.moveToNext()){
+                Log.d("providerusuario", "Usuario: "+ c.getInt(0)
+                        + " - " + c.getString(1));
+            }
+        }else{
+            Log.d("providerusuario", "Sin Usuario: ");
+        }
 
     }
 
@@ -56,13 +121,15 @@ public class MainActivity extends AppCompatActivity {
 
         ContentValues cv = new ContentValues();
 
-        cv.put(UsuarioProviderContract.FIRSTNAME_COLUMN, "Pablo");
-        cv.put(UsuarioProviderContract.LASTNAME_COLUMN, "Secundino");
+        cv.put(UsuarioProviderContract.FIRSTNAME_COLUMN, "Juan");
+        cv.put(UsuarioProviderContract.LASTNAME_COLUMN, "Peres");
+
 
         Uri uriinsert =
                 getContentResolver()
                         .insert(UsuarioProviderContract.CONTENT_URI,
                 cv);
+
 
         Log.d("providerusuario", uriinsert.toString());
     }
@@ -70,14 +137,23 @@ public class MainActivity extends AppCompatActivity {
     private void  updateCP(){
         ContentValues cv = new ContentValues();
         cv.put(UsuarioProviderContract.FIRSTNAME_COLUMN, "David");
-        cv.put(UsuarioProviderContract.LASTNAME_COLUMN, "Vwga");
+        cv.put(UsuarioProviderContract.LASTNAME_COLUMN, "Vega");
 
         Uri uriUpdate = Uri.withAppendedPath(UsuarioProviderContract.CONTENT_URI,
                 "4");
 
         int filasAfectas = getContentResolver().update(uriUpdate, cv, null, null );
 
-        Log.d("providerusuario", "Filas afectadas: "+ filasAfectas);
+        Log.d("Update", "Filas afectadas: "+ filasAfectas);
+}
+
+    private void delateCP(){
+        Uri uriDelete = Uri.withAppendedPath(UsuarioProviderContract.CONTENT_URI, "19");
+        int filasAfectadas = getContentResolver().delete(uriDelete, null, null);
+        Log.d("providerusuario", "Filas borradas" + filasAfectadas);
+        Log.d("nota", "ruta"+uriDelete);
+
+        //content://net.ivanvega.basededatosconroomb.provider/usuario/18
+        //content://net.ivanvega.basededatosconroomb.provider/usuario/19
     }
-    
 }
